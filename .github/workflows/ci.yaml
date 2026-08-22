@@ -10,10 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout required codee
+      - name: Checkout required code
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
+            pom.xml
             common-lib
             auth-service
           sparse-checkout-cone-mode: true
@@ -28,12 +29,12 @@ jobs:
         working-directory: common-lib
         run: mvn clean install -DskipTests
 
-      - name: Build order-service
+      - name: Build auth-service
         working-directory: auth-service
         run: mvn clean package -DskipTests
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: spring-boot.jar
-          path: order-service/target/*.jar
+          name: auth-service.jar
+          path: auth-service/target/*.jar
