@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout required code
+      - name: Checkout required codee
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
