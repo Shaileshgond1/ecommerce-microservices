@@ -67,11 +67,11 @@ spec:
             periodSeconds: 20
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "100m"
+              memory: "150Mi"
+              cpu: "20m"
             limits:
               memory: "1Gi"
-              cpu: "1000m"
+              cpu: "300m"
       volumes:
         - name: rustfs-data
           persistentVolumeClaim:

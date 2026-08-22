@@ -1,0 +1,33 @@
+name: building service
+on:
+  push:
+    - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout only order-service
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            order-service
+          sparse-checkout-cone-mode: true
+      - name: java setup
+        uses: actions/setup-java@v5
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+      
+      - name: building jar
+        run: mvn clean package -DskipTests
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spring-boot.jar
+          path: target/*.jar
+
+
+  
+      
+ 
