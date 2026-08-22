@@ -1,4 +1,4 @@
-name: building auth-service
+name: Build Auth Service
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
       - main
 
 jobs:
-  build:
+  build-auth-service:
+    name: Build auth-service
     runs-on: ubuntu-latest
 
     steps:
@@ -19,21 +20,17 @@ jobs:
             auth-service
           sparse-checkout-cone-mode: true
 
-      - name: Java setup
-        uses: actions/setup-java@v5
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: "21"
+          distribution: temurin
+          cache: maven
 
-      - name: Check Java and Maven
-        run: |
-          java -version
-          mvn -version
+      - name: Build auth-service
+        run: mvn clean package -B -DskipTests -pl auth-service -am
 
-      - name: Build auth-service with dependencies
-        run: mvn clean package -DskipTests -pl auth-service -am
-
-      - name: Upload artifact
+      - name: Upload auth-service JAR
         uses: actions/upload-artifact@v4
         with:
           name: auth-service.jar
