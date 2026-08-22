@@ -1,28 +1,40 @@
-steps:
-  - name: Checkout required code
-    uses: actions/checkout@v4
-    with:
-      sparse-checkout: |
-        common-spring
-        order-service
-      sparse-checkout-cone-mode: true
+name: building service
 
-  - name: Java setup
-    uses: actions/setup-java@v5
-    with:
-      java-version: '8'
-      distribution: 'temurin'
+on:
+  push:
+    branches:
+      - main
 
-  - name: Build common-spring
-    working-directory: common-spring
-    run: mvn clean install -DskipTests
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  - name: Build order-service
-    working-directory: order-service
-    run: mvn clean package -DskipTests
+    steps:
+      - name: Checkout required code
+        uses: actions/checkout@v4
+        with:
+          filters: |
+            backend:
+              - 'pom.xml'
+              - 'common-lib/**'
+              - '*-service/**'
 
-  - name: Upload artifact
-    uses: actions/upload-artifact@v4
-    with:
-      name: spring-boot.jar
-      path: order-service/target/*.jar
+      - name: Java setup on runner
+        uses: actions/setup-java@v5
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+
+      - name: Build common-spring
+        working-directory: common-spring
+        run: mvn clean install -DskipTests
+
+      - name: Build order-service
+        working-directory: order-service
+        run: mvn clean package -DskipTests
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spring-boot.jar
+          path: order-service/target/*.jar
