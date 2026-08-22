@@ -21,7 +21,7 @@ jobs:
       - name: Java setup on runner
         uses: actions/setup-java@v5
         with:
-          java-version: '8'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Build common library
