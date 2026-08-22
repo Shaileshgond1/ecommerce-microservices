@@ -1,4 +1,4 @@
-name: building service
+name: building auth-service
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
             auth-service
           sparse-checkout-cone-mode: true
 
-      - name: Java setup on runner
+      - name: Java setup
         uses: actions/setup-java@v5
         with:
           java-version: '21'
@@ -30,16 +30,8 @@ jobs:
           java -version
           mvn -version
 
-      - name: Install root parent POM
-        run: mvn install -N -DskipTests
-
-      - name: Build common library
-        working-directory: common-lib
-        run: mvn clean install -DskipTests
-
-      - name: Build auth-service
-        working-directory: auth-service
-        run: mvn clean package -DskipTests
+      - name: Build auth-service with dependencies
+        run: mvn clean package -DskipTests -pl auth-service -am
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
