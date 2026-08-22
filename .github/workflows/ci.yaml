@@ -14,7 +14,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            common-spring
+            common_lib
+            order-service
           sparse-checkout-cone-mode: true
 
       - name: Java setup on runner
@@ -23,8 +24,8 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
 
-      - name: Build common-spring
-        working-directory: common-spring
+      - name: Build common library
+        working-directory: common_lib
         run: mvn clean install -DskipTests
 
       - name: Build order-service
