@@ -15,7 +15,7 @@ jobs:
         with:
           sparse-checkout: |
             common-lib
-            order-service
+            auth-service
           sparse-checkout-cone-mode: true
 
       - name: Java setup on runner
@@ -29,7 +29,7 @@ jobs:
         run: mvn clean install -DskipTests
 
       - name: Build order-service
-        working-directory: order-service
+        working-directory: auth-service
         run: mvn clean package -DskipTests
 
       - name: Upload artifact
