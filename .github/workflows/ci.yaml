@@ -12,7 +12,7 @@ jobs:
           sparse-checkout: |
             order-service
           sparse-checkout-cone-mode: true
-      - name: java setup
+      - name: java setup on runner
         uses: actions/setup-java@v5
         with:
           java-version: '8'
