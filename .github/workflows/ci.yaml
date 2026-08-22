@@ -25,6 +25,14 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Check Java and Maven
+        run: |
+          java -version
+          mvn -version
+
+      - name: Install root parent POM
+        run: mvn install -N -DskipTests
+
       - name: Build common library
         working-directory: common-lib
         run: mvn clean install -DskipTests
