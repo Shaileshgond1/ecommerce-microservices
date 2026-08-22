@@ -13,11 +13,9 @@ jobs:
       - name: Checkout required code
         uses: actions/checkout@v4
         with:
-          filters: |
-            backend:
-              - 'pom.xml'
-              - 'common-lib/**'
-              - '*-service/**'
+          sparse-checkout: |
+            common-spring
+          sparse-checkout-cone-mode: true
 
       - name: Java setup on runner
         uses: actions/setup-java@v5
